@@ -6,10 +6,14 @@
 
 * **启动**
 
-`cd mock-server`  （进入json-server）
-`npm start` （启动json-server服务）
-`cd ..` （返回上一级）
-`npm start` （启动项目）
+```
+cd mock-server
+npm install
+npm start
+cd ..
+npm install
+npm start
+```
 
 * **主要功能**
 
@@ -30,7 +34,7 @@
   事件处理函数，处理“发表评论”事件
 
 * **举例**
-`
+```
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -60,4 +64,4 @@ class Test extends React.Component{
       })
     })
   }
-`
+```
