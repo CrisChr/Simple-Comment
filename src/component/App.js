@@ -114,7 +114,7 @@ class App extends React.Component{
     })
   }
 
-  updateTotal=()=>{
+  update=()=>{
     updateTotal({total:this.state.total+1}).then(res=>{
       Promise.all([this.getList(), this.getTotal()]);
     })
@@ -132,7 +132,7 @@ class App extends React.Component{
       avatar:this.state.avatar,
       content:this.state.value,
       datetime: moment().fromNow()
-    }, this.updateTotal);
+    }, this.update);
 
     const timer = setTimeout(()=>{
       this.setState({value:undefined,submitting:false});
