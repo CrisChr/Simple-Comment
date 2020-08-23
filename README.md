@@ -53,14 +53,13 @@ class Test extends React.Component{
   }
 
   getDataSource=(params)=>{
-    //return a Promise function
-    return getData(params);
+    return getData(params); //获取评论列表
   }
 
   postComment=(content, callback)=>{
     postData(content).then(res=>{
       Object.values(callback).map(call => {
-        return call();
+        return call(); //执行回调函数，用于更新列表和评论总数
       })
     })
   }
