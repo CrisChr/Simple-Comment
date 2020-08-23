@@ -16,15 +16,12 @@ class Test extends React.Component{
   }
 
   getDataSource=(params)=>{
-    //return a Promise function
     return getData(params);
   }
 
   postComment=(content, callback)=>{
     postData(content).then(res=>{
-      Object.values(callback).map(call => {
-        return call();
-      })
+      callback();
     })
   }
 }

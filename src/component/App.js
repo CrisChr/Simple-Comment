@@ -67,8 +67,7 @@ class App extends React.Component{
     )
   }
   componentDidMount(){
-    this.getTotal();
-    this.getList();
+    Promise.all([this.getTotal(), this.getList()])
   }
 
   getTotal=()=>{
@@ -115,20 +114,26 @@ class App extends React.Component{
     })
   }
 
+  updateTotal=()=>{
+    updateTotal({total:this.state.total+1}).then(res=>{
+      Promise.all([this.getList(), this.getTotal()]);
+    })
+  }
+
   onSubmit=()=>{
     if(!this.state.value){
       return;
     }
     this.setState({submitting:true});
+
     this.props.handleSubmit({
       id: Math.random(),
       author:this.state.author,
       avatar:this.state.avatar,
       content:this.state.value,
       datetime: moment().fromNow()
-    }, {getList: this.getList, getTotal:this.getTotal});
-    //update total
-    updateTotal({total:this.state.total+1});
+    }, this.updateTotal);
+
     const timer = setTimeout(()=>{
       this.setState({value:undefined,submitting:false});
       clearTimeout(timer);
