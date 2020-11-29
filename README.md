@@ -32,35 +32,3 @@ npm start
 
 2. **handleSubmit**
   事件处理函数，处理“发表评论”事件
-
-* **举例**
-```
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './component/App';
-import {getData, postData} from './api/data';
-
-class Test extends React.Component{
-  render(){
-    return(
-      <App
-        getList={this.getDataSource}
-        handleSubmit={this.postComment}
-        pagination={true}
-      />
-    )
-  }
-
-  getDataSource=(params)=>{
-    return getData(params); //获取评论列表
-  }
-
-  postComment=(content, callback)=>{
-    postData(content).then(res=>{
-      Object.values(callback).map(call => {
-        return call(); //执行回调函数，用于更新列表和评论总数
-      })
-    })
-  }
-```
