@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './component/App';
-import {getData, postData} from './api/data';
+import {getData, postData} from './component/request';
 
 class Test extends React.Component{
   render(){

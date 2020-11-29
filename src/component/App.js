@@ -3,9 +3,11 @@ import 'antd/dist/antd.css';
 import { Comment, Avatar, Form, Input, Button, message} from 'antd';
 import moment from 'moment';
 import {CommentList} from './comment-list';
-import {getTotal, updateTotal } from "../api/data";
+import {getTotal, updateTotal } from "./request";
+// import  webSocket  from  'socket.io-client'
 
 const {TextArea} = Input;
+// let ws = webSocket("ws://localhost:3100");
 
 class App extends React.Component{
   constructor(props){
@@ -67,7 +69,9 @@ class App extends React.Component{
     )
   }
   componentDidMount(){
-    Promise.all([this.getTotal(), this.getList()])
+    // Promise.all([this.getTotal(), this.getList()])
+    this.getTotal();
+    this.getList();
   }
 
   getTotal=()=>{
@@ -79,10 +83,10 @@ class App extends React.Component{
   getList=()=>{
     const {getList} = this.props;
     const {page, limit, pagination} = this.state;
-    getList({page, limit}).then(res=>{
+    getList({_page: page, _limit: limit}).then(res=>{
       this.setState((prevState) => ({
         comments: pagination ? res : prevState.comments.concat(res),
-        page: pagination ? 1 : (prevState.page + 1)
+        page: pagination ? page : (prevState.page + 1)
       }))
     })
   }
@@ -97,7 +101,7 @@ class App extends React.Component{
     const {getList} = this.props;
     let {page, limit, pagination} = this.state;
     page = pagination ? currentPage : page;
-    getList({page, limit}).then(res=>{
+    getList({_page: page, _limit: limit}).then(res=>{
       if(res.length===0){
         message.warning("Loaded all");
         this.setState({
@@ -116,7 +120,8 @@ class App extends React.Component{
 
   update=()=>{
     updateTotal({total:this.state.total+1}).then(res=>{
-      Promise.all([this.getList(), this.getTotal()]);
+      this.getList();
+      this.getTotal();
     })
   }
 
@@ -137,7 +142,12 @@ class App extends React.Component{
     const timer = setTimeout(()=>{
       this.setState({value:undefined,submitting:false});
       clearTimeout(timer);
-    }, 1500);
+    }, 1000);
+
+  //   ws.emit ( 'getMessage' ,  this.state.value);
+  //   ws.on( 'getMessage' ,  message  =>  {
+  //     console.log ( message )
+  // } )
   }
 }
 
